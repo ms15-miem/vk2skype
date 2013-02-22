@@ -30,6 +30,11 @@ bool Skype::connect()
     return ok;
 }
 
+void Skype::setChatId(QString _chatId)
+{
+    chatId = _chatId;
+}
+
 QStringList Skype::getBookmarkedChatIds(QString chatFriendlyName, bool &ok)
 {
     QStringList ans;
@@ -82,16 +87,30 @@ QString Skype::getChatFriendlyName(QString id, bool &ok)
     return ans;
 }
 
-bool Skype::sendChatMessage(QString chatId, QString msg)
+bool Skype::sendChatMessage(QString _chatId, Message *message)
 {
-    reply = iface->call("Invoke", "CHATMESSAGE " + chatId + " " + msg);
-    if (reply.isValid() && reply.value() == "CHATMESSAGE " + chatId + " STATUS SENDING") {
+    QString msg = message->getText();
+    message->deleteLater();
+
+    reply = iface->call("Invoke", "CHATMESSAGE " + _chatId + " " + msg);
+    if (reply.isValid() && reply.value() == "CHATMESSAGE " + _chatId + " STATUS SENDING") {
         return true;
     }
     else {
         return false;
     }
 }
+
+bool Skype::sendChatMessage(Message *message)
+{
+    if (chatId.isNull()) {
+        qDebug() << "chatId is not initialized";
+        exit(1);
+    }
+    return this->sendChatMessage(chatId, message);
+}
+
+
 
 QDBusReply<QString> Skype::invoke(QString command)
 {

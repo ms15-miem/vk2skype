@@ -3,6 +3,7 @@
 
 #include <QtDBus>
 #include <QStringList>
+#include "vk_mail/message.h"
 
 class Skype : public QObject
 {
@@ -13,6 +14,7 @@ private:
     QDBusInterface *iface;
     QString appName;
     uint protocol;
+    QString chatId;
 
 public:
     /**
@@ -27,6 +29,8 @@ public:
      * @return - returns true if no error occurred; otherwise, returns false
      */
     bool connect();
+
+    void setChatId(QString _chatId);
 
     /**
      * @brief getBookmarkedChatIds - возвращает id чатов с именем chatName, добавленных в закладки!
@@ -59,7 +63,9 @@ public slots:
      * @param msg - сообщение
      * @return - returns true if no error occurred; otherwise, returns false
      */
-    bool sendChatMessage(QString chatId, QString msg);
+    bool sendChatMessage(QString _chatId, Message *message);
+
+    bool sendChatMessage(Message *message);
 
     /**
      * @brief invoke - выполнть команду в skype
