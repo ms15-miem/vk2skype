@@ -1,0 +1,3 @@
+[submodule "vk_mail"]
+	path = vk_mail
+	url = https://github.com/narcjkeee/vk_mail.git
