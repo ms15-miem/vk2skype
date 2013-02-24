@@ -4,9 +4,9 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    QCoreApplication a(argc, argv);
 
-    a.setQuitOnLastWindowClosed(false);
+//    a.setQuitOnLastWindowClosed(false);
     a.setApplicationName("vk2skype");
 
     Server server;

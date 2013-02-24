@@ -1,5 +1,5 @@
 
-QT       += core gui
+QT       += core
 
 TARGET = vk2skype
 TEMPLATE = app
@@ -22,4 +22,4 @@ HEADERS += \
     vk_mail/oauth.h \
     server.h
 
-QT += dbus network webkit xml
+QT += dbus network xml
