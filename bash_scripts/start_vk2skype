@@ -1,0 +1,20 @@
+#!/bin/bash
+
+sleep 15;
+
+# Основные переменные
+user="skype"    # пользователь из под которого будет запускаться приложение
+
+start_command="XAUTHORITY=/tmp/skype.xvfb.auth DISPLAY=:99 /home/skype/vk2skype/vk2skype &"
+#>/dev/null 2>&1 &"
+
+# Проверяем имя пользователя. Если оно не совпадает с $user, то запускаем с помощью "su".
+# Это необходимо для правильного запуска из под пользователя root (например, при старте системы)
+
+if ( [ "$(whoami)" = "$user" ] ) then
+        bash -c "$start_command"
+else
+        su -c "$start_command" -l $user
+fi
+
+
