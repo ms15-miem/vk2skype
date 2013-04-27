@@ -4,7 +4,22 @@
 user="skype"    # пользователь из под которого будет запускаться приложение
 command="skype &"    # программа, которая будет запускаться в фоне
 
-start_command="/usr/bin/xvfb-run -f /tmp/${user}.xvfb.auth $command"
+start_command0="/usr/bin/xvfb-run -f /home/skype/skype.xvfb.auth $command"
+
+# Проверяем имя пользователя. Если оно не совпадает с $user, то запускаем с помощью "su".
+# Это необходимо для правильного запуска из под пользователя root (например, при старте системы)
+
+if ( [ "$(whoami)" = "$user" ] ) then
+        bash -c "$start_command0"
+else
+        su -c "$start_command0" -l $user
+fi
+
+autossh -f -i ~skype/.ssh/localhost_key -D 9999 -N skype@localhost
+
+sleep 15;
+
+start_command="XAUTHORITY=/home/skype/skype.xvfb.auth DISPLAY=:99 /home/skype/vk2skype/vk2skype"
 
 # Проверяем имя пользователя. Если оно не совпадает с $user, то запускаем с помощью "su".
 # Это необходимо для правильного запуска из под пользователя root (например, при старте системы)
@@ -14,3 +29,5 @@ if ( [ "$(whoami)" = "$user" ] ) then
 else
         su -c "$start_command" -l $user
 fi
+
+
