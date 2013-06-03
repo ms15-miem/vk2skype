@@ -19,7 +19,7 @@ Server::Server(QObject *parent) :
 
     bool ok = false;
 
-    QString chatFriendlyName = "code4food";
+    QString chatFriendlyName = "MIEM";
 
     QStringList chatIds = skype->getBookmarkedChatIds(chatFriendlyName, ok);
 
